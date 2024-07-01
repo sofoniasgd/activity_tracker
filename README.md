@@ -1,2 +1,6 @@
-# activity_tracker
-this is my portfolio project for ALX
+# Activity tracker
+#### This is my portfolio project for ALX
+!!! requiremenmts.txt
+pip install pipreqs
+pipreqs /home/project/location
+!!!

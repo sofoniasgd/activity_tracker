@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="title">{% block title %} Users {% endblock %}</h1>
+    <div class="content">
+        {% for user in Users %}
+            <div class="user">
+                <p><b>#{{ user.id }}</b></p>
+                <b>
+                    <p class="name">{{ user.username }}</p>
+                </b>
+                <p>{{ user.email }}</p>
+                <p>Joined: {{ user.created_at }}</p>
+                {% set t_count= namespace(value=0) %}
+                {% for task in Tasks %}
+                    {% if task.user_id == user.id %}
+                        {% set t_count.value = t_count.value + 1 %}
+                    {% endif %}
+                {% endfor %}
+                <p>number of tasks {{ t_count.value }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
