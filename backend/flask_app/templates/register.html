@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Register</h1>
+  <form action="{{ url_for('register') }}" method="POST">
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username">
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email">
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password">
+    </div>
+    <button type="submit">Register</button>
+  </form>
+  <div>
+    <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+  </div>
+  <!-- Display flashed messages -->
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+  {% endwith %}
+{% endblock %}

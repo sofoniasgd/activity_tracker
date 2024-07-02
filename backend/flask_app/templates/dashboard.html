@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+<!-- make this message temporary -->
+{% block content %}
+  <div class="container">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-info">
+          <ul class="list-unstyled">
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Your dashboard content goes here -->
+    <h1>Dashboard</h1>
+    <p>Welcome, {{ username }}</p>
+  </div>
+{% endblock %}

@@ -7,9 +7,28 @@
 </head>
 <body>
     <header>
+        {% block head %} {% endblock %}
     </header>
 
     <nav>
+        {% if current_user.is_authenticated %}
+        <a href="{{ url_for('dashboard') }}" class="navbar-item">
+            Dashboard
+        </a>
+        {% endif %}
+        {% if not current_user.is_authenticated %}
+        <a href="{{ url_for('login') }}" class="navbar-item">
+            Login
+        </a>
+        <a href="{{ url_for('register') }}" class="navbar-item">
+            Register
+        </a>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <a href="{{ url_for('logout') }}" class="navbar-item">
+            Logout
+        </a>
+        {% endif %}
     </nav>
     <hr>
 
@@ -18,6 +37,7 @@
     </div>
 
     <footer>
+        {% block footer %} {% endblock %}
     </footer>
 
 </body>
