@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from enum import Enum
 from flask import Flask, render_template, request, url_for, redirect, flash, session
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
@@ -12,6 +12,7 @@ app = Flask(__name__)
 # Configure the MySQL database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://at_dev_usr:at_dev_pwd@localhost/at_dev_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['REMEMBER_COOKIE_DURATION'] = timedelta(minutes=5)
 #set secret key
 app.secret_key = os.urandom(24)
 
