@@ -3,42 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <title>flask app</title>
-    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
 </head>
 <body>
     <header>
         {% block head %} {% endblock %}
     </header>
-
-    <nav>
-        {% if current_user.is_authenticated %}
-        <a href="{{ url_for('dashboard') }}" class="navbar-item">
-            Dashboard
-        </a>
+    {% macro content_flashes() -%}
+    <!-- display flashed messages in this box -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <text>{{ message }}</text>
+            {% endfor %}
         {% endif %}
-        {% if not current_user.is_authenticated %}
-        <a href="{{ url_for('login') }}" class="navbar-item">
-            Login
-        </a>
-        <a href="{{ url_for('register') }}" class="navbar-item">
-            Register
-        </a>
-        {% endif %}
-        {% if current_user.is_authenticated %}
-        <a href="{{ url_for('logout') }}" class="navbar-item">
-            Logout
-        </a>
-        {% endif %}
+    {% endwith %}
+    {%- endmacro %}
+    <nav class="container-fluid border py-1 my-1">
+        <div class="row">
+            <!-- if in dashboard page display nav, message area and user columns -->
+            {% if current_user.is_authenticated %}
+                <!--display menu in this block-->
+                <div class="col-lg-4 border">
+                    {% block content_nav %} {% endblock %}
+                </div>
+                <!-- display flashed messages in this box -->
+                <div class="col-lg-6 border">
+                    {{ content_flashes() }}
+                </div>
+                <!-- display user info and logout link in this box -->
+                <div class="col-lg-2 border">
+                    <text> {{ current_user.username }}</text>
+                    <a href="{{ url_for('logout') }}" class="navbar-item">Logout</a>
+                </div>
+            {% endif %}
+            <!-- if in login/register page, display login message and login/register columns?? -->
+            {% if not current_user.is_authenticated %}
+                <div class="col-lg-4">
+                        <a href="{{ url_for('login') }}" class="navbar-item">Login</a>
+                        <a href="{{ url_for('register') }}" class="navbar-item">Register</a>
+                </div>
+                <div class="col-lg-6">
+                    {{ content_flashes() }}
+                </div>
+                <div class="col-lg-2"></div>
+            {% endif %}
+            <!-- no reason to show a home/dashboard link because project has only one page
+            <div class="col-md">
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('dashboard') }}" class="navbar-item">
+                        Dashboard
+                    </a>
+                {% endif %}
+            </div>
+            -->
+        </div>
     </nav>
-    <hr>
 
-    <div class="content">
-        {% block content %} {% endblock %}
+    <!-- split Content box to two columns, pass right column to login and register forms and show stuff on left column -->
+    <!-- for the dashboard page, left column for tasks management, right column to show stats -->
+    <div class="container border">
+        <div class="row">
+            <div class="col-md-9 border">
+                {% block content_left %} {% endblock %}
+            </div>
+            <div class="col-md-3 border">
+                {% block content_right %} {% endblock %}
+            </div>
+        </div> 
     </div>
 
     <footer>
         {% block footer %} {% endblock %}
     </footer>
 
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

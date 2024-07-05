@@ -72,7 +72,6 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and check_password_hash(user.password_hash, password):
             flash('Login successful')
-            # 
             login_user(user, remember=True)
             return redirect(url_for('dashboard'))
         elif user and not check_password_hash(user.password_hash, password):
@@ -88,7 +87,8 @@ def login():
 def dashboard():
     username = current_user.username
     user_id = current_user.id
-    return render_template('dashboard.html', username=username, user_id=user_id)
+    Tasks_list = Task.query.filter_by(user_id=user_id).all()
+    return render_template('dashboard.html', username=username, user_id=user_id, User_Tasks=Tasks_list)
 
 @app.route('/logout')
 @login_required

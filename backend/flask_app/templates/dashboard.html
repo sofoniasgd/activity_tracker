@@ -1,18 +1,40 @@
 {% extends "base.html" %}
-<!-- make this message temporary -->
-{% block content %}
+
+{% block content_nav %}
+<!-- add menu for adding tasks -->
+<a href="{{ url_for('dashboard') }}">Add task</a>
+{% endblock %}
+
+<!--^^ make this message temporary ^^-->
+
+<!-- put tasks list, add and update tasks functionality here -->
+{% block content_left %}
+<div class="container">
+    <!-- task list -->
+    {% for task in User_Tasks %}
+        <div class="container border my-1 py-1">
+            <div class="row">
+                <div class="col-s-10">
+                    <b>#{{ task.id }}</b>
+                    <p class="name">{{ task.title }}</p>
+                    <p>{{ task.description }}</p>
+                    <text>Start date: {{ task.created_at }}  Due by: {{ task.due_date }}</text>
+                    <text>Status: {{ task.status }}</text>
+                    <a href="{{ url_for('dashboard', task_id=task.id) }}">Update</a>
+                </div>
+                <div class="col-md-2 border">
+                    <text>some pie chart/visualizer goes here</text>
+                </div>
+            </div>
+        </div>         
+    {% endfor %}
+</div>
+{% endblock %}
+
+<!-- put Stats and user info here  -->
+{% block content_right %}
   <div class="container">
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <div class="alert alert-info">
-          <ul class="list-unstyled">
-            {% for message in messages %}
-              <li>{{ message }}</li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endif %}
-    {% endwith %}
+
 
     <!-- Your dashboard content goes here -->
     <h1>Dashboard</h1>
