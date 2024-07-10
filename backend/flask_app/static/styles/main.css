@@ -1,0 +1,13 @@
+#add_task_form {
+    display: none;
+}
+.form_display {
+    display: none;
+}
+/* douchnut css */
+.doughnut {
+    margin: 1px;
+    width: 90px;
+    height: 90px;
+    position: relative;
+  }

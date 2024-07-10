@@ -96,5 +96,50 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
+# add route to add tasks
+@app.route('/add_task', methods=['GET', 'POST'])
+@login_required
+def add_task():
+    if request.method == 'POST':
+        title = request.form['title']
+        description = request.form['description']
+        # !!! add functionality later !!!!
+        # status = request.form['status']
+        status = 'todo'
+        due_date = request.form['due_date']
+        user_id = current_user.id
+
+        task = Task(title=title, description=description, status=status, due_date=due_date, user_id=user_id)
+        db.session.add(task)
+        db.session.commit()
+        flash('Task added successfully')
+        return redirect(url_for('dashboard'))
+    return render_template('dashboard.html')
+
+# add route to update tasks
+@app.route('/update_task/<int:id>', methods=['GET', 'POST'])
+@login_required
+def update_task(id):
+    task = Task.query.get(id)
+    if request.method == 'POST':
+        task.title = request.form['title']
+        task.description = request.form['description']
+        # task.status = request.form['status']
+        task.due_date = request.form['due_date']
+        db.session.commit()
+        flash('Task updated successfully')
+        return redirect(url_for('dashboard'))
+    return render_template('dashboard.html')
+
+# add route to delete tasks
+@app.route('/delete_task/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_task(id):
+    task = Task.query.get(id)
+    db.session.delete(task)
+    db.session.commit()
+    flash('Task deleted successfully')
+    return redirect(url_for('dashboard'))
+
 if __name__ == '__main__':
     app.run(debug=True)
