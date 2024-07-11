@@ -28,6 +28,14 @@
                         <label for="due_date">Due Date:</label>
                         <input type="datetime-local" id="due_date" name="due_date" required>
                     </div>
+                    <div>
+                        <label for="status">Status:</label>
+                        <select id="status" name="status" required>
+                            <option selected value="todo">Pending</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="completed">Complete</option>
+                        </select>
+                    </div>
                     <button type="submit">Add</button>
                 </form>
             </div>
@@ -65,6 +73,14 @@
                             <label for="due_date">Due Date:</label>
                             <input type="datetime-local" id="due_date" name="due_date" value="{{ task.due_date }}" required>
                         </div>
+                        <div>
+                            <label for="status">Status:</label>
+                            <select id="status" name="status" required>
+                                <option selected value="todo">Pending</option>
+                                <option value="in_progress">In Progress</option>
+                                <option value="completed">Complete</option>
+                            </select>
+                        </div>
                         <button type="submit" class="update_btn" id="update_task_btn{{ task.id }}">Update</button>
                         <button type="button" class="cancel_btn" id="cancel_task_btn{{ task.id }}">Cancel</button>
                     </form>
@@ -74,10 +90,12 @@
                     <!-- first set circle progress meter -->
                     <div class="doughnut" id="doughnut{{ task.id }}"></div>
                     <!-- if task is complete then show tick -->
-                    <svg width="100" height="100" id="tick{{ task.id }}">
-                        <path d="M10 50 L30 70 L70 30" stroke="silver" fill="none" stroke-width="7" />
-                        <path id="tick" d="M10 50 L30 70 L70 30" stroke="green" fill="none" stroke-width="7" />
-                    </svg>
+                    <div class="tick" id="tick{{ task.id }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" viewBox="0 0 100 100">
+                            <path fill-opacity="0" stroke-width="7" stroke="#ddd" d="M10 50 L30 70 L70 30"/>
+                            <path id="tick_path" fill-opacity="0" stroke-width="7" stroke="#19fa05" d="M10 50 L30 70 L70 30"/>
+                        </svg>
+                    </div>
                 </div>
             </div>
         </div>         

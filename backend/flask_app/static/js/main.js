@@ -88,36 +88,66 @@ document.addEventListener("DOMContentLoaded", function() {
         // get the task id from the div id
         const taskId = visualdiv.id.substring(11);
         console.log("taskID=", taskId);
+        // get doughnut and tick div ids
         const doughnutId = document.getElementById('doughnut' + taskId);
-        var bar = new ProgressBar.Circle(doughnutId, {
-            color: '#aaa',
-            // This has to be the same size as the maximum width to
-            // prevent clipping
-            strokeWidth: 10,
-            trailWidth: 0,
-            easing: 'easeInOut',
-            duration: 1400,
-            from: { color: '#eb070b', width: 3 },
-            to: { color: '#19fa05', width: 10 },
-            // Set default step function for all animate calls
-            step: function(state, circle) {
-                circle.path.setAttribute('stroke', state.color);
-                circle.path.setAttribute('stroke-width', state.width);
-                var value = Math.round(circle.value() * 100);
+        const tickId = document.getElementById('tick' + taskId);
+        // depending on status of the task either display the tick(complete) or doughnut(in_progress or ongoing)
+        const taskStatus = document.getElementById('status' + taskId).textContent.substring(8);
+        if (taskStatus === 'completed') {
+            tickId.style.display = 'block';
+            doughnutId.style.display = 'none';
+            // tick animation here
+            var tick = new ProgressBar.Path('#tick_path', {
+                easing: 'easeInOut',
+                duration: 1400
+              });
+              
+              tick.set(0);
+              tick.animate(1.0);  // Number from 0.0 to 1.0
+        }
+        else {
+            tickId.style.display = 'none';
+            doughnutId.style.display = 'block';
+            // doughnut animation here
+            var bar = new ProgressBar.Circle(doughnutId, {
+                color: '#aaa',
+                // This has to be the same size as the maximum width to
+                // prevent clipping
+                strokeWidth: 10,
+                trailWidth: 10,
+                easing: 'easeInOut',
+                duration: 1400,
+                from: { color: '#eb070b', width: 10 },
+                to: { color: '#19fa05', width: 10 },
+                // Set default step function for all animate calls
+                step: function(state, circle) {
+                    circle.path.setAttribute('stroke', state.color);
+                    circle.path.setAttribute('stroke-width', state.width);
+                    var value = Math.round(circle.value() * 100);
+                }
+            });
+            // get the task dedline from the task div
+            // start{{ task.id }}  due{{ task.id }}  status{{ task.id }}
+            const start = new Date(document.getElementById('start' + taskId).textContent.substring(12));
+            const due = new Date(document.getElementById('due' + taskId).textContent.substring(8));
+            const timelapsed = Date.now() - start;
+            const timetotal = due - start;
+            timepercent = timelapsed/timetotal;
+            const status = document.getElementById('status' + taskId).textContent.substring(8);
+            if (status === 'in_progress') {
+                // set the color of the doughnut to green
+                bar.path.setAttribute('stroke', '#19fa05');
+            } else if (status === 'todo') {
+                // set the color of the doughnut to red
+                bar.path.setAttribute('stroke', '#eb070b');
             }
-        });
-        // get the task dedline from the task div
-        // start{{ task.id }}  due{{ task.id }}  status{{ task.id }}
-        const start = new Date(document.getElementById('start' + taskId).textContent.substring(12));
-        const due = new Date(document.getElementById('due' + taskId).textContent.substring(8));
-        const timediff = Date.now() - start;
-        const timetotal = due - start;
-        console.log("date total", due - start);
-        console.log("datediff", timetotal - timediff);
-        const status = document.getElementById('status' + taskId).textContent.substring(8);
-        console.log(start, due, status);
-        // switch between divs tick{{ task.id }} and doughnut{{ task.id }}
-        // !!! set the amount based on the remaining time on the task deadline
-        bar.animate(1.0);  // Number from 0.0 to 1.0
+            // switch between divs tick{{ task.id }} and doughnut{{ task.id }}
+            // !!! set the amount based on the remaining time on the task deadline
+            console.log("timepercent=", timepercent);
+            bar.animate(timepercent);  // Number from 0.0 to 1.0
+        
+        }
+
+        
     });
 });

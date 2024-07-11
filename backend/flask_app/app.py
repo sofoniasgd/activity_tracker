@@ -103,9 +103,7 @@ def add_task():
     if request.method == 'POST':
         title = request.form['title']
         description = request.form['description']
-        # !!! add functionality later !!!!
-        # status = request.form['status']
-        status = 'todo'
+        status = request.form['status']
         due_date = request.form['due_date']
         user_id = current_user.id
 
@@ -124,7 +122,7 @@ def update_task(id):
     if request.method == 'POST':
         task.title = request.form['title']
         task.description = request.form['description']
-        # task.status = request.form['status']
+        task.status = request.form['status']
         task.due_date = request.form['due_date']
         db.session.commit()
         flash('Task updated successfully')

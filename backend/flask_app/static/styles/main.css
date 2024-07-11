@@ -6,8 +6,13 @@
 }
 /* douchnut css */
 .doughnut {
-    margin: 1px;
-    width: 90px;
-    height: 90px;
+    margin: 10px;
+    width: 100px;
+    height: 100px;
     position: relative;
+  }
+  .tick {
+    margin: 10px;
+    width: 100px;
+    height: 100px;
   }
