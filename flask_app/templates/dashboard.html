@@ -2,7 +2,7 @@
 
 {% block content_nav %}
 <!-- add  button for adding tasks -->
-<button type="button" id="add_task_btn">Add Task</button>
+<button type="button" class="nav_btn btn btn-outline-primary" id="add_task_btn">Add Task</button>
 {% endblock %}
 
 <!--^^ make this message temporary ^^-->
@@ -11,81 +11,132 @@
 {% block content_left %}
 <div class="container">
     <!-- add task form -->
-    <div class="container border my-1 py-1" id="add_task_form">
+    <div class="container border my-1 py-1 shadow p-3 mb-5 bg-body-tertiary rounded bg-light" id="add_task_form">
         <div class="row">
-            <div class="col">
+            <div class="col-md-10">
                 <h6>Add Task</h6>
-                <form action="{{ url_for('add_task') }}" method="POST">
-                    <div>
-                        <label for="title">Title:</label>
-                        <input type="text" id="title" name="title" required>
+                <form action="{{ url_for('add_task') }}" class="needs-validation" method="POST" novalidate>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="title">Title:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="title" name="title" required>
+                            <div class="invalid-feedback">Please enter your task's title</div>
+                        </div>
                     </div>
-                    <div>
-                        <label for="description">Description:</label>
-                        <input type="text" id="description" name="description" required>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="description">Description:</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" id="description" name="description"  rows="2" required></textarea>
+                            <div class="invalid-feedback">Please enter a discription for your task</div>
+                        </div>
                     </div>
-                    <div>
-                        <label for="due_date">Due Date:</label>
-                        <input type="datetime-local" id="due_date" name="due_date" required>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="start_date">Start Date:</label>
+                        <div class="col-sm-4">
+                            <input type="datetime-local" class="form-control" id="start_date" name="start_date" required>
+                            <div class="invalid-feedback">need start date and time</div>
+                        </div>
+                        <label class="col-sm-2 col-form-label" for="due_date">Due Date:</label>
+                        <div class="col-sm-4">
+                            <input type="datetime-local" class="form-control" id="due_date" name="due_date" required>
+                            <div class="invalid-feedback">need due date and time</div>
+                        </div>
                     </div>
-                    <div>
-                        <label for="status">Status:</label>
-                        <select id="status" name="status" required>
-                            <option selected value="todo">Pending</option>
-                            <option value="in_progress">In Progress</option>
-                            <option value="completed">Complete</option>
-                        </select>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="status">Status:</label>
+                        <div class="col-sm-4">
+                            <select class="col-sm-4 form-select" id="status" name="status" required>
+                                <option selected value="todo">Pending</option>
+                                <option value="in_progress">Ongoing</option>
+                                <option value="completed">Complete</option>
+                            </select>
+                            <div class="invalid-feedback">please select one option</div>
+                        </div>
+                        <div class="col-sm-8">
+                            <!-- dummy place holder -->
+                        </div>
                     </div>
-                    <button type="submit">Add</button>
+                    <button type="submit" class="btn btn-outline-primary btn-sm">Add</button>
                 </form>
+            </div>
+            <div class="col-md-2">
+                <!-- dummy place holder -->
             </div>
         </div>
     </div>
     <!-- task list -->
     {% for task in User_Tasks %}
-        <div class="container border my-1 py-1">
+        <div class="container border my-1 py-1 shadow p-3 mb-5 bg-body-tertiary rounded bg-light">
             <div class="row">
                 <!-- make the task display or form cols visible at a time using js -->
                 <div class="col-md-10 task_display" id="task_display{{ task.id }}">
-                    <b>#{{ task.id }}</b>
-                    <p class="name">{{ task.title }}</p>
-                    <p>{{ task.description }}</p>
-                    <text id="start{{ task.id }}" >Start date: {{ task.created_at }}</text><text id="due{{ task.id }}" >Due by: {{ task.due_date }}</text>
-                    <text id="status{{ task.id }}" >Status: {{ task.status }}</text>
+                    <!-- <b>#{{ task.id }}</b> -->
+                    <p class="name"><b>{{ task.title }}</b></p>
+                    <p class="text-muted" >{{ task.description }}</p>
+                    <text id="start{{ task.id }}" >Start date: {{ task.created_at }}  </text><text id="due{{ task.id }}" >Due by: {{ task.due_date }}</text>
+                    <!-- set status to be more readable -->
+                    {% if task.status == 'todo' %}
+                        {% set status = 'Pending' %}
+                    {% elif task.status == 'in_progress' %}
+                        {% set status = 'Ongoing' %}
+                    {% elif task.status == 'completed' %}
+                        {% set status = 'Complete' %}
+                    {% endif %}
+                    <p><text class="strong" id="status{{ task.id }}" >Status: {{ status }}</text></p>
                     <!-- <a href="{{ url_for('dashboard', task_id=task.id) }}">Update</a> -->
-                    <button type="button" class="edit_btn" id="edit_task_btn{{ task.id }}">edit</button>
-                    <button type="button" class="delete_btn" id="delete_task_btn{{ task.id }}">delete</button>
+                    <button type="button" class="edit_btn btn btn-outline-info btn-sm" id="edit_task_btn{{ task.id }}">edit</button>
+                    <button type="button" class="delete_btn btn btn-outline-danger btn-sm" id="delete_task_btn{{ task.id }}">delete</button>
                 </div>
                 <!-- update task form -->
                 <div class="col-md-10 form_display" id="task_form{{ task.id }}">
-                    <b>Update Task</b>
-                    
-                    <form action="{{ url_for('update_task', id=task.id) }}" method="POST">
-                        <div>
-                            <label for="title">Title:</label>
-                            <input type="text" id="title" name="title" value="{{ task.title }}" required>
+                    <h6>Update Task</h6>
+                    <form action="{{ url_for('update_task', id=task.id) }}" class="needs-validation" method="POST" novalidate>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="title">Title:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="title" name="title" value="{{ task.title }}" required>
+                                <div class="invalid-feedback">Please enter your task's title</div>
+                            </div>
                         </div>
-                        <div>
-                            <label for="description">Description:</label>
-                            <input type="text" id="description" name="description" value="{{ task.description }}" required>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="description">Description:</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="description" name="description"  rows="2" required>{{ task.description }}</textarea>
+                                <div class="invalid-feedback">Please enter a discription for your task</div>
+                            </div>
                         </div>
-                        <div>
-                            <label for="due_date">Due Date:</label>
-                            <input type="datetime-local" id="due_date" name="due_date" value="{{ task.due_date }}" required>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="start_date">Start Date:</label>
+                            <div class="col-sm-4">
+                                <input type="datetime-local" class="form-control" id="start_date" name="start_date" value="{{ task.created_at }}" required>
+                                <div class="invalid-feedback">need start date and time</div>
+                            </div>
+                            <label class="col-sm-2 col-form-label" for="due_date">Due Date:</label>
+                            <div class="col-sm-4">
+                                <input type="datetime-local" class="form-control" id="due_date" name="due_date" value="{{ task.due_date }}" required>
+                                <div class="invalid-feedback">need due date and time</div>
+                            </div>
                         </div>
-                        <div>
-                            <label for="status">Status:</label>
-                            <select id="status" name="status" required>
-                                <option selected value="todo">Pending</option>
-                                <option value="in_progress">In Progress</option>
-                                <option value="completed">Complete</option>
-                            </select>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="status">Status:</label>
+                            <div class="col-sm-4">
+                                <select class="col-sm-4 form-select" id="status" name="status" required>
+                                    <!-- !! set the selected option based on the task status -->
+                                    <option selected value="todo">Pending</option>
+                                    <option value="in_progress">Ongoing</option>
+                                    <option value="completed">Complete</option>
+                                </select>
+                                <div class="invalid-feedback">please select one option</div>
+                            </div>
+                            <div class="col-sm-8">
+                                <!-- dummy place holder -->
+                            </div>
                         </div>
-                        <button type="submit" class="update_btn" id="update_task_btn{{ task.id }}">Update</button>
-                        <button type="button" class="cancel_btn" id="cancel_task_btn{{ task.id }}">Cancel</button>
+                        <button type="submit" class="update_btn btn btn-outline-success btn-sm" id="update_task_btn{{ task.id }}">Update</button>
+                        <button type="button" class="cancel_btn btn btn-outline-danger btn-sm" id="cancel_task_btn{{ task.id }}">Cancel</button>
                     </form>
                 </div>
-                <div class="col-md-2 border task_visual_display" id="task_visual{{ task.id }}">
+                <div class="col-md-2 task_visual_display" id="task_visual{{ task.id }}">
                     <!-- progress charts -->
                     <!-- first set circle progress meter -->
                     <div class="doughnut" id="doughnut{{ task.id }}"></div>
@@ -109,7 +160,43 @@
 
 
     <!-- Your dashboard content goes here -->
-    <h1>Dashboard</h1>
-    <p>Welcome, {{ username }}</p>
-  </div>
+    <h1 class="display-6 text-center">Dashboard</h1>
+    <p class="lead text-center">Welcome, {{ username }}</p>
+    <!-- div to display graphs about current task -->
+    <div class="m-4 border">
+        <div class="row">
+            <canvas id="task_status_chart">stuff here</canvas>
+        </div>
+    </div>
+    <!-- two divs for stats -->
+    <div classk="m-4 border">
+        <!-- task stats for complete, inprogress, todo -->
+        {% block stat_calculation %}
+            {% set complete_percentage = (task_stat['completed'] / task_stat['count']) * 100 %}
+            {% set inprogress_percentage = (task_stat['in_progress'] / task_stat['count']) * 100 %}
+            {% set todo_percentage = (task_stat['todo'] / task_stat['count']) * 100 %}
+            {% set total_percentage = 100 %}
+        {% endblock %}
+        <div class="progress" style="height: 25px;">
+            <div class="progress-bar progress-bar-striped bg-info" style="width: {{ todo_percentage }}%">
+                Tasks To-DO {{ task_stat['todo'] }}
+            </div>
+        </div>
+        <div class="progress" style="height: 25px;">
+            <div class="progress-bar progress-bar-striped bg-success" style="width: {{ complete_percentage }}%">
+                Tasks Complete {{ task_stat['completed'] }}
+            </div>
+        </div>
+        <div class="progress" style="height: 25px;">
+            <div class="progress-bar progress-bar-striped bg-warning" style="width: {{ inprogress_percentage }}%">
+                Tasks In Progress {{ task_stat['in_progress'] }}
+            </div>
+        </div>
+        <div class="progress" style="height: 25px;">
+            <div class="progress-bar progress-bar-striped bg-primary" style="width: 100%">
+                Totas Tasks {{ task_stat['count'] }}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

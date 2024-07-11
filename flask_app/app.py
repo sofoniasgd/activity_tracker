@@ -88,7 +88,14 @@ def dashboard():
     username = current_user.username
     user_id = current_user.id
     Tasks_list = Task.query.filter_by(user_id=user_id).all()
-    return render_template('dashboard.html', username=username, user_id=user_id, User_Tasks=Tasks_list)
+    # get a dictionary of task status(count,complete, in progress, todo)
+    task_stat = {}
+    task_stat['completed'] = Task.query.filter_by(user_id=user_id, status='completed').count()
+    task_stat['in_progress'] = Task.query.filter_by(user_id=user_id, status='in_progress').count()
+    task_stat['todo'] = Task.query.filter_by(user_id=user_id, status='todo').count()
+    task_stat['count'] = Task.query.filter_by(user_id=user_id).count()
+    
+    return render_template('dashboard.html', username=username, user_id=user_id, User_Tasks=Tasks_list, task_stat=task_stat)
 
 @app.route('/logout')
 @login_required
@@ -104,10 +111,11 @@ def add_task():
         title = request.form['title']
         description = request.form['description']
         status = request.form['status']
+        start_date = request.form['start_date']
         due_date = request.form['due_date']
         user_id = current_user.id
 
-        task = Task(title=title, description=description, status=status, due_date=due_date, user_id=user_id)
+        task = Task(title=title, description=description, status=status,  created_at=start_date, due_date=due_date, user_id=user_id)
         db.session.add(task)
         db.session.commit()
         flash('Task added successfully')
@@ -123,6 +131,7 @@ def update_task(id):
         task.title = request.form['title']
         task.description = request.form['description']
         task.status = request.form['status']
+        task.created_at = request.form['start_date']
         task.due_date = request.form['due_date']
         db.session.commit()
         flash('Task updated successfully')

@@ -16,3 +16,15 @@
     width: 100px;
     height: 100px;
   }
+  .progress{
+    margin-bottom: 1rem;
+}
+#navbar {
+  background-image: url("../images/b3.png");
+}
+#right_block {
+  background: #f6f6e0;
+}
+body {
+  background-image: url("../images/b5.png");
+}

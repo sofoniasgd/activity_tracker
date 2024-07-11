@@ -1,7 +1,39 @@
 document.addEventListener("DOMContentLoaded", function() {
   // add progress bar library
-    
 
+  // add event listeners to nav buttons
+  const navButtons = document.querySelectorAll(".nav_btn");
+  navButtons.forEach(button => {
+    button.addEventListener("click", handleNavBtnClick);
+  });
+  // function to handle nav button click and change the active button
+  function handleNavBtnClick(event) {
+    navButtons.forEach(button => {
+      button.classList.remove("active");
+    });
+    event.target.classList.add("active");
+    console.log(event.target.textContent.toLowerCase());
+    // goto the page based on the button clicked
+    const page = event.target.textContent.toLowerCase();
+    if (['login', 'register', 'about', 'logout'].includes(page)) {
+      window.location.href=`/${page}`;
+    }
+    
+  }
+
+
+  // add custom bootstrap form validation
+  var forms = document.getElementsByClassName('needs-validation');
+  // Loop over them and prevent submission
+  var validation = Array.prototype.filter.call(forms, function(form) {
+    form.addEventListener('submit', function(event) {
+      if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    }, false);
+  });
   // add event listeners to all update task buttons
   updateButtons = document.querySelectorAll(".edit_btn");
   updateButtons.forEach(button => {
@@ -93,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const tickId = document.getElementById('tick' + taskId);
         // depending on status of the task either display the tick(complete) or doughnut(in_progress or ongoing)
         const taskStatus = document.getElementById('status' + taskId).textContent.substring(8);
-        if (taskStatus === 'completed') {
+        if (taskStatus === 'Complete') {
             tickId.style.display = 'block';
             doughnutId.style.display = 'none';
             // tick animation here

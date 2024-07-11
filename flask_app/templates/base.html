@@ -25,29 +25,32 @@
         {% endif %}
     {% endwith %}
     {%- endmacro %}
-    <nav class="container-fluid border py-1 my-1">
+    <nav class="container-fluid py-1 my-1" id="navbar">
         <div class="row">
             <!-- if in dashboard page display nav, message area and user columns -->
             {% if current_user.is_authenticated %}
                 <!--display menu in this block-->
-                <div class="col-lg-4 border">
+                <div class="col-lg-4 ">
                     {% block content_nav %} {% endblock %}
                 </div>
                 <!-- display flashed messages in this box -->
-                <div class="col-lg-6 border">
+                <div class="col-lg-6">
                     {{ content_flashes() }}
                 </div>
                 <!-- display user info and logout link in this box -->
-                <div class="col-lg-2 border">
-                    <text> {{ current_user.username }}</text>
-                    <a href="{{ url_for('logout') }}" class="navbar-item">Logout</a>
+                <div class="col-lg-2">
+                    <text class="lead"><b>{{ current_user.username }}</b></text>
+                    <button type="button" class="nav_btn btn btn-outline-info">Logout</button>
                 </div>
             {% endif %}
             <!-- if in login/register page, display login message and login/register columns?? -->
             {% if not current_user.is_authenticated %}
                 <div class="col-lg-4">
-                        <a href="{{ url_for('login') }}" class="navbar-item">Login</a>
-                        <a href="{{ url_for('register') }}" class="navbar-item">Register</a>
+                    <div class="btn-group">
+                        <button type="button" class="nav_btn btn btn-outline-primary">Login</button>
+                        <button type="button" class="nav_btn btn btn-outline-primary">Register</button>
+                        <button type="button" class="nav_btn btn btn-outline-primary">About</button>
+                    </div>
                 </div>
                 <div class="col-lg-6">
                     {{ content_flashes() }}
@@ -63,17 +66,27 @@
                 {% endif %}
             </div>
             -->
+            
         </div>
+        
     </nav>
-
     <!-- split Content box to two columns, pass right column to login and register forms and show stuff on left column -->
     <!-- for the dashboard page, left column for tasks management, right column to show stats -->
-    <div class="container border">
+    <div class="container">
         <div class="row">
-            <div class="col-md-9 border">
-                {% block content_left %} {% endblock %}
+            <div class="col-md-9 border" id="left_block">
+                {% block content_left %}
+                    <div class="container-lg my-4">    
+            
+                        <div class="p-5 mb-4 bg-info text-white rounded-3">
+                            <h1>Portfolio Project</h1>
+                            <p class="lead">This is my Activity tracker project. On this project i try to showcase what i've learnt at ALX SE for the past nine months. It's also a unique opportunity for me to try and tackle one of the major problems i'va had to contend with during my education: Time Management. By taking in this project i am writing my own tool that would help me manage my time more efficiently</p>
+                            <p><a href="https://github.com/sofoniasgd" target="_blank" class="btn btn-light btn-lg">checkout my Github profile</a></p>
+                        </div>
+                    </div>
+                {% endblock %}
             </div>
-            <div class="col-md-3 border">
+            <div class="col-md-3 border" id="right_block">
                 {% block content_right %} {% endblock %}
             </div>
         </div> 
