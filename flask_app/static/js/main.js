@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
-  // add progress bar library
-
+  // add function to make flash messages disappear after 5 seconds
+  setTimeout(function() {
+    $(".flash_alert").fadeOut('slow');
+  }, 5000);
   // add event listeners to nav buttons
   const navButtons = document.querySelectorAll(".nav_btn");
   navButtons.forEach(button => {

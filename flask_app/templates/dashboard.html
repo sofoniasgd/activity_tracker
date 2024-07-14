@@ -73,7 +73,7 @@
                     <!-- <b>#{{ task.id }}</b> -->
                     <p class="name"><b>{{ task.title }}</b></p>
                     <p class="text-muted" >{{ task.description }}</p>
-                    <text id="start{{ task.id }}" >Start date: {{ task.created_at }}  </text><text id="due{{ task.id }}" >Due by: {{ task.due_date }}</text>
+                    <text class="border border-dark" id="start{{ task.id }}" type="datetime" >Start date: {{ task.created_at }}  </text><text class="border border-info" id="due{{ task.id }}" >Due by: {{ task.due_date }}</text>
                     <!-- set status to be more readable -->
                     {% if task.status == 'todo' %}
                         {% set status = 'Pending' %}
@@ -147,6 +147,7 @@
                             <path id="tick_path" fill-opacity="0" stroke-width="7" stroke="#19fa05" d="M10 50 L30 70 L70 30"/>
                         </svg>
                     </div>
+                    
                 </div>
             </div>
         </div>         

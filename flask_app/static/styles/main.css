@@ -4,20 +4,34 @@
 .form_display {
     display: none;
 }
+.task_visual_display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 /* douchnut css */
 .doughnut {
-    margin: 10px;
     width: 100px;
     height: 100px;
-    position: relative;
   }
   .tick {
-    margin: 10px;
     width: 100px;
     height: 100px;
   }
   .progress{
     margin-bottom: 1rem;
+}
+/* make the alert bot of bootstrap smaller */
+.alert {
+  text-align: center;
+    padding: 0.25rem 0.5rem;
+    margin: 0%;
+}
+.userinfo {
+    display: flex;
+    float: right;
+    justify-content: center;
+    align-items: center;
 }
 #navbar {
   background-image: url("../images/b3.png");

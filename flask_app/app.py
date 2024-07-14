@@ -87,7 +87,9 @@ def login():
 def dashboard():
     username = current_user.username
     user_id = current_user.id
-    Tasks_list = Task.query.filter_by(user_id=user_id).all()
+    # order tasks by status first and by due date
+    Tasks_list = Task.query.filter_by(user_id=user_id).order_by(Task.status, Task.due_date).all()
+    # Tasks_list = Task.query.filter_by(user_id=user_id).all()
     # get a dictionary of task status(count,complete, in progress, todo)
     task_stat = {}
     task_stat['completed'] = Task.query.filter_by(user_id=user_id, status='completed').count()
