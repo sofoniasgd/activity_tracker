@@ -1,73 +1,145 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Activity Tracker</title>
-    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
-<body>
+
+<body class="body">
     <header>
-        <h1>Welcome to Activity Tracker</h1>
-        <p>A simple and efficient way to track your daily activities.</p>
+        <div class="head container bg-light border border-info rounded-top fixed-top">
+            <h1>Activity Tracker</h1>
+            <p>A simple app to track your daily activities</p>
+        </div>
     </header>
 
     <main>
-        <section>
-            <h2>About</h2>
-            <p>Activity Tracker is a project designed to help you keep track of your daily activities. Whether you're managing your work tasks, personal goals, or fitness routines, Activity Tracker has got you covered.</p>
-        </section>
-
-        <section>
-            <h2>Features</h2>
-            <div class="row">
-                <div class="column">
-                    <img src="screenshots/s1.png" alt="Screenshot 1">
+        <div class="container main_div">
+            <!-- short description -->
+            <div class="row my-4 py-4 bg-light ">
+                <p> a one line description of the project</p>
+            </div>
+            <!-- features 1 -->
+            <div class="row my-4 py-4 ">
+                <div class="col-md-6">
+                    <img class ="rounded-md border border-info" src="assets/img/feature1.png" alt="Feature 1">
                 </div>
-                <div class="column">
-                    <h3>Easy-to-use interface</h3>
-                    <p>Activity Tracker provides a user-friendly interface that allows you to effortlessly track your activities.</p>
+                <div class="col-md-6 d-flex align-items-center">
+                    <div class="border m-4 p-4 border-info rounded-xl bg-light mx-auto">
+                        <h2>Secure and Cross-Platform</h2>
+                        <p>Robust Session Management means you can be sure your data is safe and secure
+                            <br>Works on all devices, so you can track your activities from anywhere
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <!-- feature 2 -->
+            <div class="row my-4 py-4 ">
+                <div class="col-md-7">
+                    <img  class ="rounded-md border border-info" src="assets/img/feature2.png" alt="Feature 2">
+                </div>
+                <div class="col-md-5 d-flex align-items-center">
+                    <div class="border m-4 p-4 border-info rounded-xl bg-light mx-auto">
+                        <h2>Task Management</h2>
+                        <p>Easily add new tasks and edit existing ones to keep your activities up to date.
+                            <br>Intuitive interface means quick and hassle-free task organization, allowing you to focus on what's important.</p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <!-- feature 3 -->
+            <div class="row my-4 py-4 ">
+                <div class="col-md-7 order-md-2 border d-flex justify-content-center">
+                    <img class ="rounded-md border border-info" src="assets/img/feature3.png" alt="Feature 3">
+                </div>
+                <div class="col-md-5 order-md-1 border d-flex justify-content-flex-end">
+                    <div class="border m-4 p-4 border-info rounded-xl bg-light">
+                        <h2>Intuitive Interface</h2>
+                        <p>Minimalistic design brings clutter-free task management experience that
+                            is straight forward and enjoyable without any unnecessary complexity.</p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <!-- feature 4 -->
+            <div class="row my-4 py-4">
+                <div class="col-md-5 order-md-2 border d-flex justify-content-center">
+                    <img class ="rounded-md border border-info" src="assets/img/feature4.png" alt="Feature 4">
+                </div>
+                <div class="col-md-7 order-md-1 border d-flex align-items-center">
+                    <div class="border m-3 p-3 border-info rounded-xl bg-light mx-auto">
+                        <h2>Statistics and Insights</h2>
+                        <p>Gain valuable insights with our detailed stats section.
+                            Track time data and view comprehensive statistics about your tasks to better understand your productivity patterns and improve efficiency.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row my-4 py-4 bg-light">
+                <p> about section</p>
+            </div>
+            <!-- embed a youtube video -->
+             <div class="row my-4 py-4">
+                <div class="col-md-8 border">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=nYjzTmhrCaOqBO7w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+<!--
+            <div class="row border my-4 py-4">
+                <div class="col-md-4">
+                    <div class="border m-4 p-4 rounded-xl bg-light translate-middle">
+                        <h2>Feature 2</h2>
+                        <p>Description of feature 2 shows a feature and describes it</p>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <img src="screenshots/s1s.png" alt="Feature 2">
                 </div>
             </div>
 
-            <div class="row">
-                <div class="column">
-                    <h3>Customizable activity categories</h3>
-                    <p>With Activity Tracker, you can create and customize your own activity categories to suit your specific needs.</p>
+            <div class="row my-4 py-4">
+                <div class="col-md-8">
+                    <img src="screenshots/s1s.png" alt="Feature 1">
                 </div>
-                <div class="column">
-                    <img src="screenshots/s2.png" alt="Screenshot 2">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="column">
-                    <img src="screenshots/s3.png" alt="Screenshot 3">
-                </div>
-                <div class="column">
-                    <h3>Detailed activity logs</h3>
-                    <p>Activity Tracker keeps detailed logs of your activities, allowing you to review and analyze your progress.</p>
+                <div class="col-md-4 border rounded bg-light">
+                    <h2>Feature 1</h2>
+                    <p>Description of feature 1</p>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="column">
-                    <h3>Progress tracking and analytics</h3>
-                    <p>Track your progress and gain valuable insights with Activity Tracker's built-in analytics features.</p>
+            <div class="row my-4 py-4">
+                <div class="col-md-7 order-md-2">
+                    <img src="screenshots/s1s.png" Feature 2">
                 </div>
-                <div class="column">
-                    <img src="screenshots/s4.png" alt="Screenshot 4">
+                <div class="col-md-5 order-md-1 border rounded bg-light">
+                    <h2>Feature 2</h2>
+                    <p>Description of feature 2</p>
                 </div>
             </div>
-        </section>
-
-        <section>
-            <h2>Get Started</h2>
-            <p>Download the Activity Tracker app now and start tracking your activities!</p>
-            <a href="https://example.com/download" class="cta-button">Download Now</a>
-        </section>
+        -->
+        </div>
     </main>
 
     <footer>
-        <p>&copy; 2022 Activity Tracker. All rights reserved.</p>
+        <div class="container bg-light rounded">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+        
     </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
