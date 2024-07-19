@@ -37,11 +37,11 @@ def load_user(id):
 
 # Define Flask routes and other app logic
 
-@app.route('/')
-def index():
-    Users = User.query.all()
-    Tasks = Task.query.all()
-    return render_template('index.html', Users=Users, Tasks=Tasks)
+#@app.route('/')
+#def index():
+#    Users = User.query.all()
+#    Tasks = Task.query.all()
+#    return render_template('index.html', Users=Users, Tasks=Tasks)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -63,6 +63,7 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html')
 
+@app.route('/')
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
