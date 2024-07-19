@@ -152,4 +152,4 @@ def delete_task(id):
     return redirect(url_for('dashboard'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
