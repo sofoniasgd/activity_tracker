@@ -1,10 +1,23 @@
 .body {
-    background-image: url('../img/bg3.jpeg');
+    background-image: url('bg3.jpeg');
     /*background-image: url('../img/bg1small1080.jpg');
     background-position: center;
     background-size: center;
     background-repeat: no-repeat;
     /*background-attachment: fixed;*/
+}
+.coverimg {
+    visibility: hidden;
+}
+.description {
+    background-image: url('cover2.webp');
+    background-size: cover;
+    background-position: center;
+    height: 700px;
+    background-repeat: no-repeat;
+}
+.desc {
+    text-align: center;
 }
 .rounded-xl {
     border-radius: 1.5rem;
@@ -24,4 +37,16 @@
 .feature_3p img {
     position: absolute;
     right: 0;
+}
+#about {
+    height: 100px;
+}
+#features {
+    height: 100px;
+}
+.vid {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-25%, 0%);
 }

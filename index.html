@@ -13,16 +13,48 @@
 <body class="body">
     <header>
         <div class="head container bg-light border border-info rounded-top fixed-top">
-            <h1>Activity Tracker</h1>
-            <p>A simple app to track your daily activities</p>
+            <!-- title/description and links to section columns -->
+             <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h1>Activity Tracker</h1>
+                    </div>
+                    <div class="col-md-8">
+                        <ul class="nav justify-content-end">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#features">Features</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#about">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#video">Video</a>
+                            </li>
+                            <li>
+                                <!-- button to deployed project -->
+                                <a href="put linke here" target="_blank" class="btn btn-outline-info">Try it out</a>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 desc">
+                        <p>A simple app to track your daily activities</p>
+                    </div>
         </div>
     </header>
 
     <main>
+         <!-- short description with a background cover image -->
+        <div class=" container border description">
+            <h2>Track your activities with ease</h2>
+            <img class="coverimg" src="assets/img/cover2.webp" alt="Cover Image">
+        </div>
+
         <div class="container main_div">
-            <!-- short description -->
-            <div class="row my-4 py-4 bg-light ">
-                <p> a one line description of the project</p>
+            <div id="features" class="container">
+                <h5>Features</h5>
             </div>
             <!-- features 1 -->
             <div class="row my-4 py-4 ">
@@ -55,10 +87,10 @@
             <hr>
             <!-- feature 3 -->
             <div class="row my-4 py-4 ">
-                <div class="col-md-7 order-md-2 border d-flex justify-content-center">
+                <div class="col-md-7 order-md-2 d-flex justify-content-center">
                     <img class ="rounded-md border border-info" src="assets/img/feature3.png" alt="Feature 3">
                 </div>
-                <div class="col-md-5 order-md-1 border d-flex justify-content-flex-end">
+                <div class="col-md-5 order-md-1 d-flex justify-content-flex-end">
                     <div class="border m-4 p-4 border-info rounded-xl bg-light">
                         <h2>Intuitive Interface</h2>
                         <p>Minimalistic design brings clutter-free task management experience that
@@ -69,10 +101,10 @@
             <hr>
             <!-- feature 4 -->
             <div class="row my-4 py-4">
-                <div class="col-md-5 order-md-2 border d-flex justify-content-center">
+                <div class="col-md-5 order-md-2 d-flex justify-content-center">
                     <img class ="rounded-md border border-info" src="assets/img/feature4.png" alt="Feature 4">
                 </div>
-                <div class="col-md-7 order-md-1 border d-flex align-items-center">
+                <div class="col-md-7 order-md-1 d-flex align-items-center">
                     <div class="border m-3 p-3 border-info rounded-xl bg-light mx-auto">
                         <h2>Statistics and Insights</h2>
                         <p>Gain valuable insights with our detailed stats section.
@@ -81,60 +113,46 @@
                     </div>
                 </div>
             </div>
-            <div class="row my-4 py-4 bg-light">
-                <p> about section</p>
+            <div id="about">
+                <!-- dummy div to point to about section 100px above the actual section -->
+
+            </div>
+            <!-- about section -->
+            <div class="row m-4 p-4 rounded-md border bg-light border-info">
+                <h2>About the Project</h2>
+                <p>
+                    The inspiration for this project came from my own struggles with staying organized and on top of my daily activities. As someone who juggles multiple responsibilities, I found myself constantly searching for an efficient way to manage my tasks and monitor my progress. This personal experience drove me to create an Activity Tracker that could simplify task management and provide valuable insights into productivity.
+                </p>
+                <p>
+                    This journey began several months ago and has been a significant part of my learning experience at ALX. The Activity Tracker project not only showcases my skills but also serves as a portfolio project for my software engineering studies. You can learn more about ALX <a href="https://www.alxafrica.com/ethiopia/">here</a>.
+                </p>
+                
+                <h3>Meet the Developer</h3>
+                <ul>
+                    <li>
+                    <strong>Sofonias Gashaw</strong><br>
+                    <a href="https://github.com/sofoniasgd" target="_blank" class="link-dark">GitHub</a> | 
+                    <a href="https://www.linkedin.com/in/sofonias-gashaw-dubale" target="_blank" class="link-primary">LinkedIn</a> | 
+                    <a href="https://twitter.com/Sofagashaw" target="_blank" class="link-info">Twitter</a>
+                    </li>
+                    <!-- no more team member -->
+                </ul>
+
+                <h3>Project Repository</h3>
+                <p>
+                    You can view the source code and contribute to the project on my <a href="https://github.com/sofoniasgd/activity_tracker" target="_blank">GitHub repository</a>.
+                </p>
             </div>
             <!-- embed a youtube video -->
-             <div class="row my-4 py-4">
-                <div class="col-md-8 border">
+             <div id="video" class="row m-4 p-4 position-relative">
+                <div class="col-md-12 border vid">
                     <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=nYjzTmhrCaOqBO7w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
             </div>
-<!--
-            <div class="row border my-4 py-4">
-                <div class="col-md-4">
-                    <div class="border m-4 p-4 rounded-xl bg-light translate-middle">
-                        <h2>Feature 2</h2>
-                        <p>Description of feature 2 shows a feature and describes it</p>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <img src="screenshots/s1s.png" alt="Feature 2">
-                </div>
-            </div>
-
-            <div class="row my-4 py-4">
-                <div class="col-md-8">
-                    <img src="screenshots/s1s.png" alt="Feature 1">
-                </div>
-                <div class="col-md-4 border rounded bg-light">
-                    <h2>Feature 1</h2>
-                    <p>Description of feature 1</p>
-                </div>
-            </div>
-
-            <div class="row my-4 py-4">
-                <div class="col-md-7 order-md-2">
-                    <img src="screenshots/s1s.png" Feature 2">
-                </div>
-                <div class="col-md-5 order-md-1 border rounded bg-light">
-                    <h2>Feature 2</h2>
-                    <p>Description of feature 2</p>
-                </div>
-            </div>
-        -->
         </div>
     </main>
 
     <footer>
-        <div class="container bg-light rounded">
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
-        
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
