@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../static/styles/main.css">
     <!-- Custom JS -->
     <script src="../static/js/main.js"></script>
+    <!-- progressbar JS -->
     <script src="../static/js/progressbar.js"></script>
     <!--add jquery to make flashes dissapear after 5 seconds-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -18,13 +19,27 @@
         {% block head %} {% endblock %}
     </header>
     {% macro content_flashes() -%}
-    <!-- display flashed messages in this box -->
-    {% with messages = get_flashed_messages() %}
+    <!-- display flashed messages macro -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-            {% for message in messages %}
-            <div class="flash_alert border alert alert-primary" role="alert">
-                <text>{{ message }}</text>
-            </div>
+            {% for category, message in messages %}
+                {% if category == 'error' %}
+                    <div class="flash_alert border alert alert-danger" role="alert">
+                        <text>{{ message }}</text>
+                    </div>
+                {% elif category == 'info' %}
+                    <div class="flash_alert border alert alert-info" role="alert">
+                        <text>{{ message }}</text>
+                    </div>
+                {% elif category == 'success' %}
+                    <div class="flash_alert border alert alert-success" role="alert">
+                        <text>{{ message }}</text>
+                    </div>
+                {% elif category == 'warning' %}
+                    <div class="flash_alert border alert alert-warning" role="alert">
+                        <text>{{ message }}</text>
+                    </div>
+                {% endif %}
             {% endfor %}
         {% endif %}
     {% endwith %}
@@ -37,11 +52,11 @@
                 <div class="col-lg-4 ">
                     {% block content_nav %} {% endblock %}
                 </div>
-                <!-- display flashed messages in this box -->
+                <!-- display flashed messages in this column -->
                 <div class="col-lg-4">
                     {{ content_flashes() }}
                 </div>
-                <!-- display user info and logout link in this box -->
+                <!-- display user info and logout link in this column -->
                 <div class="col-lg-4">
                     <div class="userinfo btn-group">
                         <button type="button" class="nav_btn btn btn-outline-secondary disabled"><b><i>{{ current_user.username }}</i></b></button>
@@ -49,7 +64,7 @@
                     </div>
                 </div>
             {% endif %}
-            <!-- if in login/register page, display login message and login/register columns?? -->
+            <!-- if in login/register page, display login message and login/register button columns -->
             {% if not current_user.is_authenticated %}
                 <div class="col-lg-4">
                     <div class="btn-group">
@@ -63,16 +78,6 @@
                 </div>
                 <div class="col-lg-4"></div>
             {% endif %}
-            <!-- no reason to show a home/dashboard link because project has only one page
-            <div class="col-md">
-                {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('dashboard') }}" class="navbar-item">
-                        Dashboard
-                    </a>
-                {% endif %}
-            </div>
-            -->
-            
         </div>
         
     </nav>
@@ -85,8 +90,13 @@
                     <div class="container-lg my-4">
                         <div class="p-5 mb-4 bg-info text-white rounded-3">
                             <h1>Portfolio Project</h1>
-                            <p class="lead">This is my Activity tracker project. On this project i try to showcase what i've learnt at ALX SE for the past nine months. It's also a unique opportunity for me to try and tackle one of the major problems i'va had to contend with during my education: Time Management. By taking in this project i am writing my own tool that would help me manage my time more efficiently</p>
-                            <p><a href="https://github.com/sofoniasgd" target="_blank" class="btn btn-light btn-lg">checkout my Github profile</a></p>
+                            <p class="lead">This is my Activity tracker project. On this project i try to showcase what i've learnt at ALX SE for the past nine months. 
+                                It's also a unique opportunity for me to try and tackle one of the major problems i've had to contend with during my education: 
+                                Time Management. By taking in this project i am writing my own tool that would help me manage my time more efficiently
+                                <br><a href="https://sofoniasgd.github.io/activity_tracker/" class="link-dark link-opacity-10">Get more info about this project</a>
+                            </p>
+
+                            <p><a href="https://github.com/sofoniasgd" target="_blank" class="btn btn-light btn-lg btn-outline-info">checkout my Github profile</a></p>
                         </div>
                     </div>
                 {% endblock %}

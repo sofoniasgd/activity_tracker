@@ -64,140 +64,158 @@
             </div>
         </div>
     </div>
-    <!-- task list -->
-    {% for task in User_Tasks %}
+    <!-- display add task text if no task is available -->
+    {% if User_Tasks|length == 0 %}
         <div class="container border my-1 py-1 shadow p-3 mb-5 bg-body-tertiary rounded bg-light">
             <div class="row">
-                <!-- make the task display or form cols visible at a time using js -->
-                <div class="col-md-10 task_display" id="task_display{{ task.id }}">
-                    <!-- <b>#{{ task.id }}</b> -->
-                    <p class="name"><b>{{ task.title }}</b></p>
-                    <p class="text-muted" >{{ task.description }}</p>
-                    <text class="border border-dark" id="start{{ task.id }}" type="datetime" >Start date: {{ task.created_at }}  </text><text class="border border-info" id="due{{ task.id }}" >Due by: {{ task.due_date }}</text>
-                    <!-- set status to be more readable -->
-                    {% if task.status == 'todo' %}
-                        {% set status = 'Pending' %}
-                    {% elif task.status == 'in_progress' %}
-                        {% set status = 'Ongoing' %}
-                    {% elif task.status == 'completed' %}
-                        {% set status = 'Complete' %}
-                    {% endif %}
-                    <p><text class="strong" id="status{{ task.id }}" >Status: {{ status }}</text></p>
-                    <!-- <a href="{{ url_for('dashboard', task_id=task.id) }}">Update</a> -->
-                    <button type="button" class="edit_btn btn btn-outline-info btn-sm" id="edit_task_btn{{ task.id }}">edit</button>
-                    <button type="button" class="delete_btn btn btn-outline-danger btn-sm" id="delete_task_btn{{ task.id }}">delete</button>
-                </div>
-                <!-- update task form -->
-                <div class="col-md-10 form_display" id="task_form{{ task.id }}">
-                    <h6>Update Task</h6>
-                    <form action="{{ url_for('update_task', id=task.id) }}" class="needs-validation" method="POST" novalidate>
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="title">Title:</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="title" name="title" value="{{ task.title }}" required>
-                                <div class="invalid-feedback">Please enter your task's title</div>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="description">Description:</label>
-                            <div class="col-sm-10">
-                                <textarea class="form-control" id="description" name="description"  rows="2" required>{{ task.description }}</textarea>
-                                <div class="invalid-feedback">Please enter a discription for your task</div>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="start_date">Start Date:</label>
-                            <div class="col-sm-4">
-                                <input type="datetime-local" class="form-control" id="start_date" name="start_date" value="{{ task.created_at }}" required>
-                                <div class="invalid-feedback">need start date and time</div>
-                            </div>
-                            <label class="col-sm-2 col-form-label" for="due_date">Due Date:</label>
-                            <div class="col-sm-4">
-                                <input type="datetime-local" class="form-control" id="due_date" name="due_date" value="{{ task.due_date }}" required>
-                                <div class="invalid-feedback">need due date and time</div>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="status">Status:</label>
-                            <div class="col-sm-4">
-                                <select class="col-sm-4 form-select" id="status" name="status" required>
-                                    <!-- !! set the selected option based on the task status -->
-                                    <option selected value="todo">Pending</option>
-                                    <option value="in_progress">Ongoing</option>
-                                    <option value="completed">Complete</option>
-                                </select>
-                                <div class="invalid-feedback">please select one option</div>
-                            </div>
-                            <div class="col-sm-8">
-                                <!-- dummy place holder -->
-                            </div>
-                        </div>
-                        <button type="submit" class="update_btn btn btn-outline-success btn-sm" id="update_task_btn{{ task.id }}">Update</button>
-                        <button type="button" class="cancel_btn btn btn-outline-danger btn-sm" id="cancel_task_btn{{ task.id }}">Cancel</button>
-                    </form>
-                </div>
-                <div class="col-md-2 task_visual_display" id="task_visual{{ task.id }}">
-                    <!-- progress charts -->
-                    <!-- first set circle progress meter -->
-                    <div class="doughnut" id="doughnut{{ task.id }}"></div>
-                    <!-- if task is complete then show tick -->
-                    <div class="tick" id="tick{{ task.id }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" viewBox="0 0 100 100">
-                            <path fill-opacity="0" stroke-width="7" stroke="#ddd" d="M10 50 L30 70 L70 30"/>
-                            <path id="tick_path" fill-opacity="0" stroke-width="7" stroke="#19fa05" d="M10 50 L30 70 L70 30"/>
-                        </svg>
-                    </div>
-                    
+                <div class="col-md-10">
+                    <p class="text-muted">seems like you have no tasks, click the button above to add a task</p>
                 </div>
             </div>
-        </div>         
-    {% endfor %}
+        </div>
+    {% endif %}
+    <!-- task list -->
+    {% if User_Tasks|length > 0 %}
+        {% for task in User_Tasks %}
+            <div class="container border my-1 py-1 shadow p-3 mb-5 bg-body-tertiary rounded bg-light">
+                <div class="row">
+                    <!-- make the task display or form cols visible at a time using js -->
+                    <div class="col-md-10 task_display" id="task_display{{ task.id }}">
+                        <!-- <b>#{{ task.id }}</b> -->
+                        <p class="name"><b>{{ task.title }}</b></p>
+                        <p class="text-muted" >{{ task.description }}</p>
+                        <text class="border border-dark" id="start{{ task.id }}" type="datetime" >Start date: {{ task.created_at }}  </text><text class="border border-info" id="due{{ task.id }}" >Due by: {{ task.due_date }}</text>
+                        <!-- set status to be more readable -->
+                        {% if task.status == 'todo' %}
+                            {% set status = 'Pending' %}
+                        {% elif task.status == 'in_progress' %}
+                            {% set status = 'Ongoing' %}
+                        {% elif task.status == 'completed' %}
+                            {% set status = 'Complete' %}
+                        {% endif %}
+                        <p><text class="strong" id="status{{ task.id }}" >Status: {{ status }}</text></p>
+                        <!-- <a href="{{ url_for('dashboard', task_id=task.id) }}">Update</a> -->
+                        <button type="button" class="edit_btn btn btn-outline-info btn-sm" id="edit_task_btn{{ task.id }}">edit</button>
+                        <button type="button" class="delete_btn btn btn-outline-danger btn-sm" id="delete_task_btn{{ task.id }}">delete</button>
+                    </div>
+                    <!-- update task form -->
+                    <div class="col-md-10 form_display" id="task_form{{ task.id }}">
+                        <h6>Update Task</h6>
+                        <form action="{{ url_for('update_task', id=task.id) }}" class="needs-validation" method="POST" novalidate>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="title">Title:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="title" name="title" value="{{ task.title }}" required>
+                                    <div class="invalid-feedback">Please enter your task's title</div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="description">Description:</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" id="description" name="description"  rows="2" required>{{ task.description }}</textarea>
+                                    <div class="invalid-feedback">Please enter a discription for your task</div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="start_date">Start Date:</label>
+                                <div class="col-sm-4">
+                                    <input type="datetime-local" class="form-control" id="start_date" name="start_date" value="{{ task.created_at }}" required>
+                                    <div class="invalid-feedback">need start date and time</div>
+                                </div>
+                                <label class="col-sm-2 col-form-label" for="due_date">Due Date:</label>
+                                <div class="col-sm-4">
+                                    <input type="datetime-local" class="form-control" id="due_date" name="due_date" value="{{ task.due_date }}" required>
+                                    <div class="invalid-feedback">need due date and time</div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="status">Status:</label>
+                                <div class="col-sm-4">
+                                    <select class="col-sm-4 form-select" id="status" name="status" required>
+                                        <!-- !! set the selected option based on the task status -->
+                                        <option selected value="todo">Pending</option>
+                                        <option value="in_progress">Ongoing</option>
+                                        <option value="completed">Complete</option>
+                                    </select>
+                                    <div class="invalid-feedback">please select one option</div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <!-- dummy place holder -->
+                                </div>
+                            </div>
+                            <button type="submit" class="update_btn btn btn-outline-success btn-sm" id="update_task_btn{{ task.id }}">Update</button>
+                            <button type="button" class="cancel_btn btn btn-outline-danger btn-sm" id="cancel_task_btn{{ task.id }}">Cancel</button>
+                        </form>
+                    </div>
+                    <div class="col-md-2 task_visual_display" id="task_visual{{ task.id }}">
+                        <!-- progress charts -->
+                        <!-- first set circle progress meter -->
+                        <div class="doughnut" id="doughnut{{ task.id }}"></div>
+                        <!-- if task is complete then show tick -->
+                        <div class="tick" id="tick{{ task.id }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" viewBox="0 0 100 100">
+                                <path fill-opacity="0" stroke-width="7" stroke="#ddd" d="M10 50 L30 70 L70 30"/>
+                                <path id="tick_path" fill-opacity="0" stroke-width="7" stroke="#19fa05" d="M10 50 L30 70 L70 30"/>
+                            </svg>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>         
+        {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}
 
-<!-- put Stats and user info here  -->
+<!-- Stats and user info  -->
+ 
 {% block content_right %}
-  <div class="container">
+<div class="container">
 
 
-    <!-- Your dashboard content goes here -->
+    <!-- dashboard content -->
     <h1 class="display-6 text-center">Dashboard</h1>
     <p class="lead text-center">Welcome, {{ username }}</p>
-    <!-- div to display graphs about current task -->
-    <div class="m-4 border">
-        <div class="row">
-            <canvas id="task_status_chart">stuff here</canvas>
-        </div>
-    </div>
-    <!-- two divs for stats -->
-    <div classk="m-4 border">
-        <!-- task stats for complete, inprogress, todo -->
-        {% block stat_calculation %}
-            {% set complete_percentage = (task_stat['completed'] / task_stat['count']) * 100 %}
-            {% set inprogress_percentage = (task_stat['in_progress'] / task_stat['count']) * 100 %}
-            {% set todo_percentage = (task_stat['todo'] / task_stat['count']) * 100 %}
-            {% set total_percentage = 100 %}
-        {% endblock %}
-        <div class="progress" style="height: 25px;">
-            <div class="progress-bar progress-bar-striped bg-info" style="width: {{ todo_percentage }}%">
-                Tasks To-DO {{ task_stat['todo'] }}
+    {% if User_Tasks|length == 0 %}
+        <p class="text-muted text-center">No Data</p>
+    {% else %}
+        <!-- div to display graphs about current task -->
+        <div class="m-4 border">
+            <div class="row">
+                <canvas id="task_status_chart">stuff here</canvas>
             </div>
         </div>
-        <div class="progress" style="height: 25px;">
-            <div class="progress-bar progress-bar-striped bg-success" style="width: {{ complete_percentage }}%">
-                Tasks Complete {{ task_stat['completed'] }}
+        <!-- two divs for stats -->
+        <div classk="m-4 border">
+            <!-- task stats for complete, inprogress, todo -->
+            {% block stat_calculation %}
+                {% set complete_percentage = (task_stat['completed'] / task_stat['count']) * 100 %}
+                {% set inprogress_percentage = (task_stat['in_progress'] / task_stat['count']) * 100 %}
+                {% set todo_percentage = (task_stat['todo'] / task_stat['count']) * 100 %}
+                {% set total_percentage = 100 %}
+            {% endblock %}
+            <div class="progress" style="height: 25px;">
+                <div class="progress-bar progress-bar-striped bg-info" style="width: {{ todo_percentage }}%">
+                    Tasks To-DO {{ task_stat['todo'] }}
+                </div>
+            </div>
+            <div class="progress" style="height: 25px;">
+                <div class="progress-bar progress-bar-striped bg-success" style="width: {{ complete_percentage }}%">
+                    Tasks Complete {{ task_stat['completed'] }}
+                </div>
+            </div>
+            <div class="progress" style="height: 25px;">
+                <div class="progress-bar progress-bar-striped bg-warning" style="width: {{ inprogress_percentage }}%">
+                    Tasks In Progress {{ task_stat['in_progress'] }}
+                </div>
+            </div>
+            <div class="progress" style="height: 25px;">
+                <div class="progress-bar progress-bar-striped bg-primary" style="width: 100%">
+                    Totas Tasks {{ task_stat['count'] }}
+                </div>
             </div>
         </div>
-        <div class="progress" style="height: 25px;">
-            <div class="progress-bar progress-bar-striped bg-warning" style="width: {{ inprogress_percentage }}%">
-                Tasks In Progress {{ task_stat['in_progress'] }}
-            </div>
-        </div>
-        <div class="progress" style="height: 25px;">
-            <div class="progress-bar progress-bar-striped bg-primary" style="width: 100%">
-                Totas Tasks {{ task_stat['count'] }}
-            </div>
-        </div>
-    </div>
+    
+    {% endif %}
 </div>
 {% endblock %}

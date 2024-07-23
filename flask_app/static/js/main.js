@@ -17,8 +17,11 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log(event.target.textContent.toLowerCase());
     // goto the page based on the button clicked
     const page = event.target.textContent.toLowerCase();
-    if (['login', 'register', 'about', 'logout'].includes(page)) {
+    if (['login', 'register', 'logout'].includes(page)) {
       window.location.href=`/${page}`;
+    }
+    else if (page === 'about') {
+      window.location.href=`https://sofoniasgd.github.io/activity_tracker/`;
     }
     
   }
@@ -87,11 +90,21 @@ document.addEventListener("DOMContentLoaded", function() {
         const taskForm = document.getElementById('task_form' + taskId);
         // popup confirmation before deleting the task
         if (confirm("Are you sure you want to delete this task?") == true) {
-            fetch(`/delete_task/${taskId}`, {
-                method: 'POST',
+            fetch(`/delete_task/${taskId}`, { method: 'POST'})
+            .then(response => {
+              if (response.ok) {
+                window.location.reload();
+              } else {
+                console.log(response);
+                window.alert('Task deletion failed');
+              }
             })
+            .catch(error => {
+              console.error('There has been a problem with the fetch operation:', error);
+            });
+
             // reload page after deleting the task
-            window.location.reload();
+           
         }
     }
 
@@ -180,8 +193,6 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log("timepercent=", timepercent);
             bar.animate(timepercent);  // Number from 0.0 to 1.0
         
-        }
-
-        
+        }  
     });
 });
