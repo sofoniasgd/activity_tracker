@@ -66,7 +66,7 @@ def register():
     return render_template('register.html')
 
 
-# default route is the login route
+# make the default route the same as login route
 @app.route('/')
 def landing():
     return redirect(url_for('https://sofoniasgd.github.io/activity_tracker/'))
@@ -92,6 +92,7 @@ def login():
     return render_template('login.html')
 
 
+# route to the dashboard
 @app.route('/dashboard')
 @login_required
 def dashboard():
@@ -125,7 +126,7 @@ def logout():
     return redirect(url_for('login'))
 
 
-# add route to add tasks
+# route to add tasks
 @app.route('/add_task', methods=['GET', 'POST'])
 @login_required
 def add_task():
@@ -141,6 +142,12 @@ def add_task():
                     created_at=datetime.strptime(start_date, '%Y-%m-%dT%H:%M'),
                     due_date=datetime.strptime(due_date, '%Y-%m-%dT%H:%M'),
                     user_id=user_id)
+        # flush the task to get the task id
+        db.session.add(task)
+        db.session.flush()
+        # get task id
+        app.logger.info("user id", user_id)
+        app.logger.info("task id", task.id)
         # convert form dates into datetime objects
         st_date = datetime.strptime(start_date, '%Y-%m-%dT%H:%M')
         d_date = datetime.strptime(due_date, '%Y-%m-%dT%H:%M')
@@ -149,7 +156,6 @@ def add_task():
         timelog = TimeLog(user_id=user_id, task_id=task.id,
                           start_time=st_date, end_time=d_date,
                           duration=duration)
-        db.session.add(task)
         db.session.add(timelog)
         db.session.commit()
         flash('Task added successfully', 'success')
@@ -157,7 +163,7 @@ def add_task():
     return render_template('dashboard.html')
 
 
-# add route to update tasks
+# route to update tasks
 @app.route('/update_task/<int:id>', methods=['GET', 'POST'])
 @login_required
 def update_task(id):
@@ -181,14 +187,14 @@ def update_task(id):
     return redirect(url_for('dashboard'))
 
 
-# add route to delete tasks
+# route to delete tasks
 @app.route('/delete_task/<int:id>', methods=['GET', 'POST'])
 @login_required
 def delete_task(id):
 
     if request.method == 'POST':
         db.session.delete(Task.query.get(id))
-        # db.session.delete(TimeLog.query.filter_by(task_id=id))
+        db.session.delete(TimeLog.query.filter_by(task_id=id))
         db.session.commit()
         flash('Task deleted successfully', 'success')
         return 'success', 200
