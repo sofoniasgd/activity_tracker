@@ -168,19 +168,29 @@ def add_task():
 @login_required
 def update_task(id):
     task = Task.query.get(id)
-    timelog = TimeLog.query.filter_by(task_id=id)
-    str = task is None, 'Task does not exist', timelog is None, 'TimeLog does not exist'
-    flash(str)
+    timelog = TimeLog.query.filter_by(task_id=id).first()
+    #str = task is None, 'Task does not exist', timelog is None, 'TimeLog does not exist'
+    #flash(str)
     if request.method == 'POST':
         task.title = request.form['title']
         task.description = request.form['description']
         task.status = request.form['status']
-        task.created_at = datetime.strptime(request.form['start_date'], '%Y-%m-%dT%H:%M')
-        timelog.start_time =  datetime.strptime(request.form['start_date'], '%Y-%m-%dT%H:%M')
-        task.due_date = datetime.strptime(request.form['due_date'], '%Y-%m-%dT%H:%M')
-        timelog.end_time = datetime.strptime(request.form['due_date'], '%Y-%m-%dT%H:%M')
+        # string values for the datetimes
+        start_date = request.form['start_date']
+        due_date = request.form['due_date']
+        task.status = request.form['status']
+        db.session.flush()
+        task.created_at = datetime.strptime(start_date, '%Y-%m-%dT%H:%M')
+        db.session.flush()
+        timelog.start_time =  datetime.strptime(start_date, '%Y-%m-%dT%H:%M')
+        db.session.flush()
+        task.due_date = datetime.strptime(due_date, '%Y-%m-%dT%H:%M')
+        db.session.flush()
+        timelog.end_time = datetime.strptime(due_date, '%Y-%m-%dT%H:%M')
+        db.session.flush()
         duration = (timelog.end_time - timelog.start_time).total_seconds() / 60
         timelog.duration = duration
+        db.session.flush()
         db.session.commit()
         flash('Task updated successfully', 'success')
         return redirect(url_for('dashboard'))
@@ -193,8 +203,10 @@ def update_task(id):
 def delete_task(id):
 
     if request.method == 'POST':
+        # delete the timelog entry first to not get into constraint errors
+        timelog = TimeLog.query.filter_by(task_id=id).first()
+        db.session.delete(timelog)
         db.session.delete(Task.query.get(id))
-        db.session.delete(TimeLog.query.filter_by(task_id=id))
         db.session.commit()
         flash('Task deleted successfully', 'success')
         return 'success', 200
