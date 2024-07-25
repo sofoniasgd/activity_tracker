@@ -60,7 +60,10 @@ Access your dashboard to view and manage your tasks.
 - Manage Tasks:
 Add new tasks, update their status, and log time spent on each task. The dashboard will dynamically update to reflect your productivity.
 ### Screenshots
-
+![screenshots/r1.png](https://github.com/sofoniasgd/activity_tracker/blob/main/screenshots/r1.png?raw=true)  
+![screenshots/r2.png](https://github.com/sofoniasgd/activity_tracker/blob/main/screenshots/r2.png?raw=true)  
+![screenshots/r3.png](https://github.com/sofoniasgd/activity_tracker/blob/main/screenshots/r3.png?raw=true)  
+![screenshots/r4.png](https://github.com/sofoniasgd/activity_tracker/blob/main/screenshots/r4.png?raw=true)  
 ### Contributing  
 Contributions are welcome! To contribute:  
 > Fork the repository.   
