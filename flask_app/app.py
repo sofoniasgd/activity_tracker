@@ -118,6 +118,7 @@ def dashboard():
                            timelog_list=timelog_list, task_stat=task_stat)
 
 
+# logout route to end the session
 @app.route('/logout')
 @login_required
 def logout():
