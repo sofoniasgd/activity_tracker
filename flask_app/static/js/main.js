@@ -175,11 +175,38 @@ document.addEventListener("DOMContentLoaded", function() {
             });
             // get the task dedline from the task div
             // start{{ task.id }}  due{{ task.id }}  status{{ task.id }}
-            const start = new Date(document.getElementById('start' + taskId).textContent.substring(12));
-            const due = new Date(document.getElementById('due' + taskId).textContent.substring(8));
-            const timelapsed = Date.now() - start;
-            const timetotal = due - start;
+            // start= timelog_start{{ task.id }} end=timelog_end{{ task.id }}
+            // duration= timelog_duration{{ task.id }}
+            
+            
+            timelog_start = document.getElementById('timelog_start' + taskId).textContent;
+            timelog_due = document.getElementById('timelog_due' + taskId).textContent;
+            // get start and end times in milliseconds
+            const start = Date.parse(timelog_start);
+            const due = Date.parse(timelog_due);
+            console.log("start", start);
+            console.log("end", due);
+            
+            
+            var timelapsed = Date.now() - start;
+            var timetotal = due - start;
+            console.log("timenow", Date.now());
+            console.log("timeelapsed", timelapsed);
+            console.log("timetotal", timetotal);
+            // flip time total if negative
+            if (timetotal < 0) {
+              timetotal = timetotal * -1;
+            }
+            // if timelapsed is negative then task starts in the future so set progress to 0
+            if (timelapsed < 0) {
+              timelapsed = 0;
+            }
+            // const timetotal = document.getElementById('timelog_duration' + taskId).textContent
             timepercent = timelapsed/timetotal;
+            // if timepercent is greater than 1 then set it to 1
+            if (timepercent > 1) {
+              timepercent = 1;
+            }
             const status = document.getElementById('status' + taskId).textContent.substring(8);
             if (status === 'in_progress') {
                 // set the color of the doughnut to green

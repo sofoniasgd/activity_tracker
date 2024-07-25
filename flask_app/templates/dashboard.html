@@ -94,7 +94,17 @@
                             {% set status = 'Complete' %}
                         {% endif %}
                         <p><text class="strong" id="status{{ task.id }}" >Status: {{ status }}</text></p>
-                        <!-- <a href="{{ url_for('dashboard', task_id=task.id) }}">Update</a> -->
+                        <!-- make timelog data available for the js progressbar -->
+                        <div class="timelog" id="timelog{{ task.id }}" style="display: none;">
+                            {% for timelog in timelog_list %}
+                                {% if timelog.task_id == task.id %}
+                                    <text id="timelog_id{{ task.id }}" >{{ timelog.id }}</text>
+                                    <text id="timelog_start{{ task.id }}" >{{ timelog.start_time }}</text>
+                                    <text id="timelog_due{{ task.id }}" >{{ timelog.end_time }}</text>
+                                    <text id="timelog_duration{{ task.id }}" >{{ timelog.duration }}</text>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                         <button type="button" class="edit_btn btn btn-outline-info btn-sm" id="edit_task_btn{{ task.id }}">edit</button>
                         <button type="button" class="delete_btn btn btn-outline-danger btn-sm" id="delete_task_btn{{ task.id }}">delete</button>
                     </div>
@@ -133,9 +143,24 @@
                                 <div class="col-sm-4">
                                     <select class="col-sm-4 form-select" id="status" name="status" required>
                                         <!-- !! set the selected option based on the task status -->
+                                        {% if task.status == 'todo' %}
+                                            <option selected value="todo">Pending</option>
+                                            <option value="in_progress">Ongoing</option>
+                                            <option value="completed">Complete</option>
+                                        {% elif task.status == 'in_progress' %}
+                                            <option value="todo">Pending</option>
+                                            <option selected value="in_progress">Ongoing</option>
+                                            <option value="completed">Complete</option>
+                                        {% elif task.status == 'completed' %}
+                                            <option value="todo">Pending</option>
+                                            <option value="in_progress">Ongoing</option>
+                                            <option selected value="completed">Complete</option>
+                                        {% endif %}
+                                        <!--
                                         <option selected value="todo">Pending</option>
                                         <option value="in_progress">Ongoing</option>
                                         <option value="completed">Complete</option>
+                                        -->
                                     </select>
                                     <div class="invalid-feedback">please select one option</div>
                                 </div>
